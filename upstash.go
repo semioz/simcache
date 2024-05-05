@@ -1,15 +1,12 @@
-package main
+package simcache
 
 import (
 	"errors"
-	"fmt"
+
 	"github.com/upstash/vector-go"
-	"net/http"
-	"os"
-	"time"
 )
 
-type SimCacheConfig struct {
+type UpstashConfig struct {
 	MinProximity float32 `json:"minProximity"`
 	Index        *vector.Index
 }
@@ -19,7 +16,7 @@ type SimCache struct {
 	index        *vector.Index
 }
 
-func NewSimCache(config SimCacheConfig) *SimCache {
+func NewSimCache(config UpstashConfig) *SimCache {
 	if config.MinProximity == 0 {
 		config.MinProximity = 0.8
 	}
@@ -121,32 +118,4 @@ func (cache *SimCache) Flush() error {
 		return err
 	}
 	return nil
-}
-
-func main() {
-	fmt.Println("Hello, World!")
-	opts := vector.Options{
-		Url:    os.Getenv("ENDPOINT"),
-		Token:  os.Getenv("TOKEN"),
-		Client: &http.Client{},
-	}
-
-	index := vector.NewIndexWith(opts)
-	// Use simCache
-	simCacheConfig := SimCacheConfig{
-		MinProximity: 0.5,
-		Index:        index,
-	}
-	simCache := NewSimCache(simCacheConfig)
-	err := simCache.Set("CEO of Tesla", "Elon Musk")
-	if err != nil {
-		fmt.Println(err)
-	}
-	time.Sleep(1 * time.Second)
-
-	res, err := simCache.Get("Who owns tesla?")
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(res)
 }

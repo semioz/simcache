@@ -3,3 +3,4 @@
 app.env
 *.log
 config.yaml
+cmd
