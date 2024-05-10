@@ -4,7 +4,7 @@ Semantic cache for your LLM apps in Go!
 
 # Usage of simcache via LangchainGo and Upstash
 
-```
+```golang
 package main
 
 import (
