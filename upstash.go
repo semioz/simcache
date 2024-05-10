@@ -6,7 +6,7 @@ import (
 	"github.com/upstash/vector-go"
 )
 
-type UpstashConfig struct {
+type CacheConfig struct {
 	MinProximity float32 `json:"minProximity"`
 	Index        *vector.Index
 }
@@ -16,7 +16,7 @@ type SimCache struct {
 	index        *vector.Index
 }
 
-func NewSimCache(config UpstashConfig) *SimCache {
+func NewSimCache(config CacheConfig) *SimCache {
 	if config.MinProximity == 0 {
 		config.MinProximity = 0.8
 	}
