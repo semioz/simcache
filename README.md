@@ -2,7 +2,7 @@
 
 Semantic cache for your LLM apps in Go!
 
-# Usage of simcache via LangchainGo and Upstash
+## Usage of simcache via LangchainGo and Upstash
 
 ```golang
 package main
@@ -21,7 +21,7 @@ import (
 
 func main() {
 	index := vector.NewIndex("UPSTASH_URL", "UPSTASH_TOKEN")
-	simCache := simcache.NewSimCache(simcache.UpstashConfig{
+	simCache := simcache.NewSimCache(simcache.CacheConfig{
 		Index:        index,
 		MinProximity: 0.9,
 	})
