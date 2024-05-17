@@ -21,7 +21,7 @@ import (
 
 func main() {
 	index := vector.NewIndex("UPSTASH_URL", "UPSTASH_TOKEN")
-	simCache := simcache.NewSimCache(simcache.CacheConfig{
+	simCache := simcache.NewSimCache(simcache.UpstashOptions{
 		Index:        index,
 		MinProximity: 0.9,
 	})

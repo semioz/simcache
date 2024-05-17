@@ -7,7 +7,7 @@ import (
 )
 
 func TestNewSimCache(t *testing.T) {
-	config := UpstashConfig{
+	config := UpstashOptions{
 		MinProximity: 0.5,
 		Index:        vector.NewIndex("URL", "TOKEN"),
 	}
@@ -21,7 +21,7 @@ func TestNewSimCache(t *testing.T) {
 }
 
 func TestSet(t *testing.T) {
-	config := UpstashConfig{
+	config := UpstashOptions{
 		MinProximity: 0.5,
 		Index:        vector.NewIndex("URL", "TOKEN"),
 	}
@@ -41,7 +41,7 @@ func TestSet(t *testing.T) {
 }
 
 func TestGet(t *testing.T) {
-	config := UpstashConfig{
+	config := UpstashOptions{
 		MinProximity: 0.5,
 		Index:        vector.NewIndex("URL", "TOKEN"),
 	}
@@ -92,7 +92,7 @@ func TestGet(t *testing.T) {
 }
 
 func TestDelete(t *testing.T) {
-	config := UpstashConfig{
+	config := UpstashOptions{
 		MinProximity: 0.5,
 		Index:        vector.NewIndex("URL", "TOKEN"),
 	}
@@ -118,7 +118,7 @@ func TestDelete(t *testing.T) {
 }
 
 func TestBulkDelete(t *testing.T) {
-	config := UpstashConfig{
+	config := UpstashOptions{
 		MinProximity: 0.5,
 		Index:        vector.NewIndex("URL", "TOKEN"),
 	}
@@ -154,7 +154,7 @@ func TestBulkDelete(t *testing.T) {
 }
 
 func TestFlush(t *testing.T) {
-	config := UpstashConfig{
+	config := UpstashOptions{
 		MinProximity: 0.5,
 		Index:        vector.NewIndex("URL", "TOKEN"),
 	}

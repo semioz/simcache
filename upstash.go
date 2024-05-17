@@ -6,27 +6,27 @@ import (
 	"github.com/upstash/vector-go"
 )
 
-type CacheConfig struct {
+type UpstashOptions struct {
 	MinProximity float32 `json:"minProximity"`
 	Index        *vector.Index
 }
 
-type SimCache struct {
+type UpstashSimCache struct {
 	minProximity float32
 	index        *vector.Index
 }
 
-func NewSimCache(config CacheConfig) *SimCache {
+func NewSimCache(config UpstashOptions) *UpstashSimCache {
 	if config.MinProximity == 0 {
 		config.MinProximity = 0.8
 	}
-	return &SimCache{
+	return &UpstashSimCache{
 		minProximity: config.MinProximity,
 		index:        config.Index,
 	}
 }
 
-func (cache *SimCache) Get(keyOrKeys interface{}) (interface{}, error) {
+func (cache *UpstashSimCache) Get(keyOrKeys interface{}) (interface{}, error) {
 	switch key := keyOrKeys.(type) {
 	case string:
 		return cache.queryKey(key)
@@ -44,7 +44,7 @@ func (cache *SimCache) Get(keyOrKeys interface{}) (interface{}, error) {
 	return "", errors.New("invalid types or lengths")
 }
 
-func (cache *SimCache) queryKey(key string) (interface{}, error) {
+func (cache *UpstashSimCache) queryKey(key string) (interface{}, error) {
 	res, err := cache.index.QueryData(vector.QueryData{
 		Data:            key,
 		TopK:            2,
@@ -60,7 +60,7 @@ func (cache *SimCache) queryKey(key string) (interface{}, error) {
 	return "", nil
 }
 
-func (cache *SimCache) Set(keyOrKeys interface{}, valueOrValues interface{}) error {
+func (cache *UpstashSimCache) Set(keyOrKeys interface{}, valueOrValues interface{}) error {
 	switch key := keyOrKeys.(type) {
 	case string:
 		if value, ok := valueOrValues.(string); ok {
@@ -96,7 +96,7 @@ func (cache *SimCache) Set(keyOrKeys interface{}, valueOrValues interface{}) err
 	return errors.New("invalid types or lengths")
 }
 
-func (cache *SimCache) Delete(key string) error {
+func (cache *UpstashSimCache) Delete(key string) error {
 	_, err := cache.index.Delete(key)
 	if err != nil {
 		return err
@@ -104,7 +104,7 @@ func (cache *SimCache) Delete(key string) error {
 	return nil
 }
 
-func (cache *SimCache) BulkDelete(keys []string) error {
+func (cache *UpstashSimCache) BulkDelete(keys []string) error {
 	_, err := cache.index.DeleteMany(keys)
 	if err != nil {
 		return err
@@ -112,7 +112,7 @@ func (cache *SimCache) BulkDelete(keys []string) error {
 	return nil
 }
 
-func (cache *SimCache) Flush() error {
+func (cache *UpstashSimCache) Flush() error {
 	err := cache.index.Reset()
 	if err != nil {
 		return err
